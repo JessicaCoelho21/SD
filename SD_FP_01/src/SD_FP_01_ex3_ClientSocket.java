@@ -8,7 +8,7 @@ public class SD_FP_01_ex3_ClientSocket {
         BufferedReader in = null;
 
         try {
-            echoSocket = new Socket("localhost", 12345);
+            echoSocket = new Socket("localhost", 7);
             out = new PrintWriter(echoSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
         } catch (UnknownHostException e) {
@@ -23,6 +23,7 @@ public class SD_FP_01_ex3_ClientSocket {
         String userInput;
 
         while ((userInput = stdIn.readLine()) != null) {
+            //mensagem enviada do cliente para o servidor
             out.println(userInput);
             System.out.println(echoSocket.getLocalAddress() + ": echo: " + in.readLine());
         }

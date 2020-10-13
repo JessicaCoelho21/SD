@@ -1,28 +1,31 @@
 import java.net.*;
 import java.io.*;
-import java.util.Date;
-
 public class SD_FP01_ex3_ServerSocket {
-    public static void main(String[] args) {
+    public static void main (String[] args) throws IOException{
+        ServerSocket serverSocket = null;
+        Socket clientSocket = null;
+        PrintWriter out = null;
+
         try {
-            //Instancia o ServerSocket ouvindo a porta 12345
-            ServerSocket server = new ServerSocket(12345);
-            System.out.println("Server listening to port 12345");
-
-            while(true) {
-                //o método accept() bloqueia a execução até que o server receba um pedido de conexão
-                Socket client = server.accept();
-                System.out.println("Client connected to: " + client.getInetAddress().getHostAddress());
-                ObjectOutputStream out = new ObjectOutputStream(client.getOutputStream());
-
-                out.flush();
-                out.writeObject(new Date());
-                out.close();
-                client.close();
-            }
+            serverSocket = new ServerSocket(7);
+            clientSocket = serverSocket.accept();
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+        } catch (IOException e) {
+            System.out.println("Exception caught when trying to listen to port or listening for a connection");
         }
-        catch(Exception e) {
-            System.out.println("Erroe: " + e.getMessage());
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        String inputLine;
+
+        while ((inputLine = in.readLine()) != null) {
+            //mensagem enviada do cliente para o servidor
+            out.println(inputLine);
         }
+
+        out.close();
+        in.close();
+        serverSocket.close();
+        clientSocket.close();
     }
+
 }
