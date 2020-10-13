@@ -29,10 +29,7 @@ public class SD_FP_0_ex3 {
                     || nome[i] == 'A' || nome[i] == 'E' || nome[i] == 'I' || nome[i] == 'O' ||
                     nome[i] == 'U') {
                 vogais++;
-            } else if (nome[i] == ' ' || nome[i] == '\n'){
-                vogais = vogais;
-                consoantes = consoantes;
-            } else {
+            } else if (nome[i] != ' ' && nome[i] != '\n'){
                 consoantes++;
             }
         }
