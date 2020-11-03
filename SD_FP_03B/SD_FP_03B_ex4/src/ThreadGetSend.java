@@ -26,7 +26,6 @@ public class ThreadGetSend extends Thread{
                     break;
                 }
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }

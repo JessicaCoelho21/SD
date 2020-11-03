@@ -7,13 +7,13 @@ public class ChatServer {
 
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
-        int port=2048;
+        int port = 2048;
         boolean listening = true;
 
         try {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
-            System.err.println("Could not listen on port: "+port+".");
+            System.err.println("Could not listen on port: " + port + ".");
             System.exit(-1);
         }
 
@@ -22,6 +22,7 @@ public class ChatServer {
             wt.start();
             chat.add(wt);
         }
+
         serverSocket.close();
     }
 

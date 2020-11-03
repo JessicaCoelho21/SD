@@ -17,6 +17,7 @@ public class ThreadRecievePrint extends Thread{
         try {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String fromServer = null;
+
             while ((fromServer = in.readLine()) != null) {
                 System.out.println("Message: " + fromServer);
             }

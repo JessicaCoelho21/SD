@@ -30,6 +30,5 @@ public class EchoServerThread extends Thread{
                     + socket.getLocalPort() + " or listening for a connection");
             System.out.println(e.getMessage());
         }
-
     }
 }

@@ -18,27 +18,25 @@ public class WorkerThread extends Thread{
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-
             String inputLine = null;
+
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("Cliente: " + inputLine);
                 LocalDateTime now = LocalDateTime.now();
                 String text = "" + dtf.format(now) + " " + socket.getLocalAddress().toString() + ":" + inputLine;
                 ChatServer.sendBroadcast(text,this);
+
                 if (inputLine.equals("Bye")) {
                     break;
                 }
             }
 
-
             out.close();
             in.close();
             socket.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void sendMessage(String text){
