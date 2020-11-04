@@ -12,6 +12,7 @@ public class ThreadGetSend extends Thread{
 
     public void run() {
         super.run();
+
         try {
             out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));

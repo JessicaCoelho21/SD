@@ -1,9 +1,10 @@
 import java.io.*;
 import java.net.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
-public class WorkerThread extends Thread{
+public class WorkerThread extends Thread {
+    public static ArrayList<Socket> Clientes = new ArrayList<>();
+
     private Socket socket = null;
     PrintWriter out = null;
     BufferedReader in = null;
@@ -17,29 +18,25 @@ public class WorkerThread extends Thread{
         try {
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            String inputLine = null;
+            //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
-            while ((inputLine = in.readLine()) != null) {
-                System.out.println("Cliente: " + inputLine);
-                LocalDateTime now = LocalDateTime.now();
-                String text = "" + dtf.format(now) + " " + socket.getLocalAddress().toString() + ":" + inputLine;
-                ChatServer.sendBroadcast(text,this);
-
-                if (inputLine.equals("Bye")) {
-                    break;
-                }
+            while (socket.getInputStream() != null) {
+                Clientes.add(socket);
+                out.println("Connected");
+                ProcessClient pc = new ProcessClient(socket);
+                pc.start();
+                break;
             }
 
+            /*
             out.close();
             in.close();
             socket.close();
+            */
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    public void sendMessage(String text){
-        out.println(text);
-    }
 }
+
